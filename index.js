@@ -16,5 +16,5 @@ Go code!
 const server = require("./server");
 
 server.listen(5000, () => {
-  console.log("Server Chilling on port 5000")
+  console.log("Server is Chilling on port 5000")
 })
