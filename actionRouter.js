@@ -7,10 +7,10 @@ const actionDatabase = require("./data/helpers/actionModel");
 
 // -- GET (GET)
 
-router.get("/:id", validateId, (req, res) => {
+router.get("/", validateId, (req, res) => {
 
   actionDatabase
-    .get(req.params.id)
+    .get()
       .then(user => {
         res.status(200).json(user)
       })
@@ -24,7 +24,7 @@ router.get("/:id", validateId, (req, res) => {
 
 router.post("/", validatePost, (req,res) => {
 
-  actionDatabase.insert(req.body)
+  actionDatabase.insert()
     .then(action => {
       res.status(201).json(action)
     })
@@ -36,13 +36,16 @@ router.post("/", validatePost, (req,res) => {
 
 // PUT (UPDATE)
 
-router.put("/:id", validateId, validatePost, (req,res) => {
-  actionDatabase.update(req.params.id, req.body)
+router.put("/:id", validateId, (req,res) => {
+    const id = req.params.id;
+    const update = req.body;
+
+  actionDatabase.update(id, update)
     .then(project => {
-      res.status(201).json(project)
+      res.status(201).json({project})
     })
     .catch(error => {
-      res.status(500).json(error)
+      res.status(500).json({error})
     })
 })
 
@@ -62,7 +65,7 @@ router.delete("/:id", validateId, (req,res) => {
 // VALIDATE
 
 function validateId(req, res, next) {
-    
+
   actionDatabase.get(req.params.id) 
    .then(user => {
 
@@ -77,7 +80,7 @@ function validateId(req, res, next) {
 
 function validatePost(req, res, next) {
   if (!req.body.project_id || !req.body.description || !req.body.notes) {
-    res.status(400).json({message: "missing proper text field"})
+    res.status(400).json({message: "missing proper input field"})
   }
   else if (!req.body) {
     res.status(400).json({message: "interesting"})

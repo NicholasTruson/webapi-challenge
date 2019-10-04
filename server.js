@@ -16,17 +16,17 @@ function logger(req, res, next) {
   
   server.use(logger);
 
-server.use("/api/proj", logger, projectRouter)
-server.use("/api/proj/:id/actions", actionRouter)
+server.use("/api/projects", projectRouter)
+server.use("/api/actions", actionRouter)
 
 server.get('/', (req, res) => {
     res.status(200).json({ welcome: 'It is Working!' });
   });
 
-server.get('/test', (req, res) => {
-    res.status()
-    console.log()
-})
+//server.get('/test', (req, res) => {
+  //  res.status()
+   // console.log()
+//})
 
 // logger
 
