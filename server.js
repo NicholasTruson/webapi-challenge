@@ -1,20 +1,11 @@
 const express = require("express")
-const server = express();
 
-//server.use(logger);
-server.use(express.json());
+const server = express();
 
 const projectRouter = require("./projectRouter");
 const actionRouter = require("./actionRouter");
 
-server.use("/projectRouter", logger, projectRouter)
-//server.use("/actionRouter", actionRouter)
-
-server.get('/', (req, res) => {
-    res.status(200).json({ welcome: 'It is Working!' });
-  });
-
-// logger
+server.use(express.json());
 
 function logger(req, res, next) {
     console.log(
@@ -24,5 +15,18 @@ function logger(req, res, next) {
   }
   
   server.use(logger);
+
+server.use("/api/proj", logger, projectRouter)
+server.use("/api/proj/:id/actions", actionRouter)
+
+server.get('/', (req, res) => {
+    res.status(200).json({ welcome: 'It is Working!' });
+  });
+
+server.get('/')
+
+// logger
+
+
 
 module.exports = server;
