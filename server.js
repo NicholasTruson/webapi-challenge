@@ -23,7 +23,10 @@ server.get('/', (req, res) => {
     res.status(200).json({ welcome: 'It is Working!' });
   });
 
-server.get('/')
+server.get('/test', (req, res) => {
+    res.status()
+    console.log()
+})
 
 // logger
 
