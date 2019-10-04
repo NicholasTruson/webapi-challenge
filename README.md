@@ -26,13 +26,23 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+    - Learned about server side routing with express and using middleware with node.js
+
 - [ ] Describe Middleware?
+
+    - Middleware is a tool for monitoring the processes of making api calls and returning indications if there is an issue.
 
 - [ ] Describe a Resource?
 
+    - Everything is a resource, available via unique URL, managed via HTTP methods
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+    - A hard coded status message telling the client a request was successful
+
 - [ ] How can we partition our application into sub-applications?
+
+    - Routing
 
 ## Project Setup
 

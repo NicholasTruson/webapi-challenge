@@ -1,0 +1,91 @@
+const express = "express";
+
+const router = require("express").Router();
+
+const actionDatabase = require("./data/helpers/actionModel");
+
+
+// -- GET (GET)
+
+router.get("/", validateId, (req, res) => {
+
+  actionDatabase
+    .get()
+      .then(user => {
+        res.status(200).json(user)
+      })
+
+      .catch(error => {
+        res.status(500).json(error)
+      })
+})
+
+//POST (INSERT)
+
+router.post("/", validatePost, (req,res) => {
+
+  actionDatabase.insert()
+    .then(action => {
+      res.status(201).json(action)
+    })
+
+    .catch(error => {
+      res.status(500).json(error)
+    })
+})
+
+// PUT (UPDATE)
+
+router.put("/:id", validateId, (req,res) => {
+    const id = req.params.id;
+    const update = req.body;
+
+  actionDatabase.update(id, update)
+    .then(project => {
+      res.status(201).json({project})
+    })
+    .catch(error => {
+      res.status(500).json({error})
+    })
+})
+
+// DELETE (REMOVE)
+
+router.delete("/:id", validateId, (req,res) => {
+
+  actionDatabase.remove(req.params.id)
+    .then(action => {
+      res.status(200).json(action)
+    })
+    .catch(error => {
+      res.status(500).json({message: error})
+    })
+})
+
+// VALIDATE
+
+function validateId(req, res, next) {
+
+  actionDatabase.get(req.params.id) 
+   .then(user => {
+
+     if (user) {
+       next();
+     }
+     else {
+       res.status(404).json({message: "improper id"})
+     }
+   })
+}
+
+function validatePost(req, res, next) {
+  if (!req.body.project_id || !req.body.description || !req.body.notes) {
+    res.status(400).json({message: "missing proper input field"})
+  }
+  else if (!req.body) {
+    res.status(400).json({message: "interesting"})
+  }
+  next();
+}
+
+module.exports = router;
